@@ -10,30 +10,30 @@ Work in Progress!
 - Overrides?
 
 * Intro to Nix
-- These slides: github.com/sveitser/nix-tour
-- Nix configuration: github.com/sveitser/nixconfig
+- These slides: [[https://github.com/sveitser/nix-tour][github.com/sveitser/nix-tour]]
+- My NixOS config: [[https://github.com/sveitser/nixconfig][github.com/sveitser/nixconfig]]
 
 * Motivation
-1001 forgotten/obsolete/... dependencies.
-The latest and greatest.
-APIs "subject to change yesterday".
-Can anyone run my code?
-Can I run my code in a year?
+- 1001 forgotten/obsolete/... dependencies.
+- The latest and greatest.
+- APIs "subject to change yesterday".
+- Can anyone run my code?
+- Can I run my code in a year?
 
 * Installation
-Native package manager on =NixOS=.
-Download from: https://nixos.org/nix/
-All in =/nix=, doesn't get in the way.
+- Native package manager on =NixOS=.
+- Download from: [[https://nixos.org/nix][nixos.org/nix]]
+- All in =/nix=, doesn't get in the way.
 
 * Nix Language
 
-https://nixos.wiki/wiki/Nix_Expression_Language
+- [[https://nixos.wiki/wiki/Nix_Expression_Language][nixos.wiki/wiki/Nix_Expression_Language]]
+- Lazy! (overrideable)
+- Run =nix repl=.
+- Type =:?= for help.
 
-Run =nix repl= to start a shell. Type =:?= for help.
-Lazy! (overrideable)
-
-Examples:
-#+begin_code nix
+** Examples:
+#+begin_src nix
 plus = a: b: a + b
 plus 2 3
 plus-two = plus 2
@@ -46,17 +46,16 @@ myPath = /this/is/a/path
 myString = "this is a string"
 five = let x = 2; in x + 3
 map (x: x * 2) [1 2 3]
-#+end_code
+#+end_src
 
 * Nix Package Manager
-Invoked with =nix=
-
-- nix derivations
+- Invoked with =nix=
+- nix "derivations"
 - =nix build=
 - =nix search=
 
 * Nix shell
-Ad hoc: =nix-shell -p ipython=
+- Ad hoc: =nix-shell -p ipython=
 #+BEGIN_SRC nix
 with import <nixpkgs> {  };
 mkShell {
@@ -72,8 +71,9 @@ mkShell {
 - Easy to pin =nixpkgs=.
 
 * Direnv
-Per directory "automagic" environment.
-Install + hook into shell.
+- Per directory "automagic" environment.
+- See [[https://direnv.net][direnv.net]]
+- Hook into shell src_bash[:exports code]{eval "$(direnv hook bash)"}
 #+BEGIN_SRC bash
 echo 'use nix' > .envrc
 direnv allow
@@ -81,16 +81,14 @@ direnv allow
 - =direnv=
 - nix-shell + virtualenv with direnv
 
-=nix-locate -w libstdc++.so.6=
-
 * Disadvantages
-Learning curve.
-Not easily discoverable.
-Some extra storage space.
+- Learning curve.
+- Not easily discoverable.
+- Some extra storage space.
 
 * Advantages
-Reproducible.
-Cross platform.
-Works (fails) consistently.
-Actually fun.
-Totally worth it!
+- Reproducible.
+- Cross platform.
+- Works (fails) consistently.
+- Actually fun.
+- Totally worth it!

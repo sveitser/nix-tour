@@ -1,0 +1,96 @@
+#+TITLE:     Nix Tour
+#+AUTHOR:    Mathis Antony
+#+EMAIL:     sveitser@gmail.com
+
+Work in Progress!
+* TODO:
+- Check doom emacs presentation mode.
+- Make sure all packages are downloader / run everything once.
+- Show example of pinned nixpkgs.
+- Overrides?
+
+* Intro to Nix
+- These slides: github.com/sveitser/nix-tour
+- Nix configuration: github.com/sveitser/nixconfig
+
+* Motivation
+1001 forgotten/obsolete/... dependencies.
+The latest and greatest.
+APIs "subject to change yesterday".
+Can anyone run my code?
+Can I run my code in a year?
+
+* Installation
+Native package manager on =NixOS=.
+Download from: https://nixos.org/nix/
+All in =/nix=, doesn't get in the way.
+
+* Nix Language
+
+https://nixos.wiki/wiki/Nix_Expression_Language
+
+Run =nix repl= to start a shell. Type =:?= for help.
+Lazy! (overrideable)
+
+Examples:
+#+begin_code nix
+plus = a: b: a + b
+plus 2 3
+plus-two = plus 2
+plus-two 3
+
+myList = [ 1 2 "blah" ];
+mySet = { a = 1; b = "hello"; };
+
+myPath = /this/is/a/path
+myString = "this is a string"
+five = let x = 2; in x + 3
+map (x: x * 2) [1 2 3]
+#+end_code
+
+* Nix Package Manager
+Invoked with =nix=
+
+- nix derivations
+- =nix build=
+- =nix search=
+
+* Nix shell
+Ad hoc: =nix-shell -p ipython=
+#+BEGIN_SRC nix
+with import <nixpkgs> {  };
+mkShell {
+  buildInputs = [
+    python3Packages.ipython  # a better way later
+    python3Packages.pandas
+    python3Packages.tensorflow
+    haskellPackages.tensorflow
+  ];
+}
+#+END_SRC
+- => shell.nix=
+- Easy to pin =nixpkgs=.
+
+* Direnv
+Per directory "automagic" environment.
+Install + hook into shell.
+#+BEGIN_SRC bash
+echo 'use nix' > .envrc
+direnv allow
+#+END_SRC
+- =direnv=
+- nix-shell + virtualenv with direnv
+
+=nix-locate -w libstdc++.so.6=
+
+* Disadvantages
+Learning curve.
+Not easily discoverable.
+Some extra storage space.
+
+* Advantages
+Reproducible.
+Cross platform.
+Works (fails) consistently.
+Actually fun.
+Totally worth it!

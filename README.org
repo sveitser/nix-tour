@@ -5,7 +5,7 @@
 Work in Progress!
 * TODO:
 - Check doom emacs presentation mode.
-- Make sure all packages are downloader / run everything once.
+- Make sure all packages are downloaded / run everything once.
 - Show example of pinned nixpkgs.
 - Overrides?
 
@@ -33,41 +33,52 @@ Work in Progress!
 - Type =:?= for help.
 
 ** Examples:
-#+begin_src nix
+#+BEGIN_SRC
 plus = a: b: a + b
 plus 2 3
+
 plus-two = plus 2
 plus-two 3
 
 myList = [ 1 2 "blah" ];
 mySet = { a = 1; b = "hello"; };
-
 myPath = /this/is/a/path
 myString = "this is a string"
 five = let x = 2; in x + 3
 map (x: x * 2) [1 2 3]
-#+end_src
+#+END_SRC
 
 * Nix Package Manager
-- Invoked with =nix=
-- nix "derivations"
+- Packages [[https://github.com/nixos/nixpkgs][github.com/nixos/nixpkgs]].
+- Invoked with =nix=.
+- nix "derivations".
 - =nix build=
 - =nix search=
 
 * Nix shell
-- Ad hoc: =nix-shell -p ipython=
+- Ad hoc: =nix-shell -p vim -p emacs=
 #+BEGIN_SRC nix
-with import <nixpkgs> {  };
+with import <nixpkgs> { };
 mkShell {
   buildInputs = [
-    python3Packages.ipython  # a better way later
-    python3Packages.pandas
-    python3Packages.tensorflow
-    haskellPackages.tensorflow
+    vim
+    emacs
   ];
 }
 #+END_SRC
-- => shell.nix=
+- Goes into =shell.nix=.
+- Activate with =nix-shell=.
+
+- Convenience wrappers for many languages
+#+BEGIN_SRC nix
+with import <nixpkgs> { };
+mkShell {
+  buildInputs = [
+    (python3Packages.withPackages (ps: [ps.ipython ps.tensorflow]))
+    (haskellPackages.ghcWithPackages (ps: [ps.tensorflow ps.tensorflow-ops ps.HUnit]))
+  ];
+}
+#+END_SRC
 - Easy to pin =nixpkgs=.
 
 * Direnv
@@ -78,8 +89,13 @@ mkShell {
 echo 'use nix' > .envrc
 direnv allow
 #+END_SRC
-- =direnv=
 - nix-shell + virtualenv with direnv
+#+BEGIN_SRC bash
+echo layout_python >> .envrc
+direnv allow
+echo ipython > requirements.txt
+pip install -r requirements.txt
+#+END_SRC
 
 * Disadvantages
 - Learning curve.

@@ -84,7 +84,7 @@ mkShell {
 * Direnv
 - Per directory "automagic" environment.
 - See [[https://direnv.net][direnv.net]]
-- Hook into shell src_bash[:exports code]{eval "$(direnv hook bash)"}
+- Hook into shell =eval "$(direnv hook bash)"=
 #+BEGIN_SRC bash
 echo 'use nix' > .envrc
 direnv allow

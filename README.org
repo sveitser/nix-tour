@@ -6,7 +6,6 @@ Work in Progress!
 * TODO:
 - Check doom emacs presentation mode.
 - Make sure all packages are downloaded / run everything once.
-- Show example of pinned nixpkgs.
 - Overrides?
 
 * Intro to Nix
@@ -69,18 +68,6 @@ mkShell {
 - Goes into =shell.nix=.
 - Activate with =nix-shell=.
 
-- Convenience wrappers for many languages
-#+BEGIN_SRC nix
-with import <nixpkgs> { };
-mkShell {
-  buildInputs = [
-    (python3Packages.withPackages (ps: [ps.ipython ps.tensorflow]))
-    (haskellPackages.ghcWithPackages (ps: [ps.tensorflow ps.tensorflow-ops ps.HUnit]))
-  ];
-}
-#+END_SRC
-- Easy to pin =nixpkgs=.
-
 * Direnv
 - Per directory "automagic" environment.
 - See [[https://direnv.net][direnv.net]]
@@ -97,10 +84,40 @@ echo ipython > requirements.txt
 pip install -r requirements.txt
 #+END_SRC
 
+* Nix shell: wrappers
+- Convenience wrappers for many languages
+#+BEGIN_SRC nix
+with import <nixpkgs> { };
+mkShell {
+  buildInputs = [
+    (python3Packages.withPackages (ps: [ps.ipython ps.tensorflow]))
+    (haskellPackages.ghcWithPackages (ps: [ps.tensorflow ps.tensorflow-ops ps.HUnit]))
+  ];
+}
+#+END_SRC
+- Easy to pin =nixpkgs=.
+* Nix shell: pinning
+- Fix package tree.
+- Pick git commit SHA of =nixpkgs= repo.
+- Compute hash: =nix-prefetch-url --unpack https://github.com/nixos/nixpkgs/archive/$SHA.tar.gz=
+#+BEGIN_SRC nix
+with import (
+  builtins.fetchTarball {
+    url = "https://github.com/nixos/nixpkgs/archive/0a7e258012b60cbe530a756f09a4f2516786d370.tar.gz";
+    sha256 = "1qcnxkqkw7bffyc17mqifcwjfqwbvn0vs0xgxnjvh9w0ssl2s036";
+) { };
+mkShell {
+  buildInputs = [
+    (python3Packages.withPackages (ps: [ps.ipython ps.pandas]))
+  ];
+}
+#+END_SRC
+
 * Disadvantages
 - Learning curve.
 - Not easily discoverable.
 - Some extra storage space.
+- (Very rarely) a package is hard to build.
 
 * Advantages
 - Reproducible.

@@ -6,20 +6,11 @@ Work in Progress!
 * TODO:
 - Check doom emacs presentation mode.
 - Make sure all packages are downloaded / run everything once.
-- Overrides?
 
 * Intro to Nix
-- These slides: [[https://github.com/sveitser/nix-tour][github.com/sveitser/nix-tour]]
-- My NixOS config: [[https://github.com/sveitser/nixconfig][github.com/sveitser/nixconfig]]
+- Slides: [[https://github.com/sveitser/nix-tour][github.com/sveitser/nix-tour]]
 
 * Motivation
-- 1001 forgotten/obsolete/... dependencies.
-- The latest and greatest.
-- APIs "subject to change yesterday".
-- Can anyone run my code?
-- Can I run my code in a year?
-
-* More Motivation
 - Notes from trying to run a machine learning project.
 ** phomemizer
 - Is not on pypi. We can run
@@ -39,10 +30,23 @@ before installing from =requirements.txt=.
 - Despite setting NO_CUDA=1 it tries to compile with CUDA support.
   Maybe NO_CUDA wasn't implemented in pytorch 0.1.12 yet.
 - It would require and old CUDA version.
-* Installation
-- Native package manager on =NixOS=.
-- Download from: [[https://nixos.org/nix][nixos.org/nix]]
-- All in =/nix=, doesn't get in the way.
+
+* More Motivation
+- 1001 forgotten/obsolete/... dependencies.
+- The latest and greatest.
+- APIs "subject to change yesterday".
+- Can anyone run my code?
+- Can I run my code in a year?
+
+* Teaser
+#+BEGIN_SRC nix
+with import <nixpkgs> { };
+
+python3.withPackages (ps: [
+  (ps.pytorchWithCuda.override { cudatoolkit = cudatoolkit_8; })
+  ps.ipython
+])
+#+END_SRC
 
 * Nix Language
 
@@ -66,13 +70,19 @@ myString = "this is a string"
 five = let x = 2; in x + 3
 map (x: x * 2) [1 2 3]
 #+END_SRC
+* Installation
+- Native package manager on =NixOS=.
+- Download from: [[https://nixos.org/nix][nixos.org/nix]]
+- All in =/nix=, doesn't get in the way.
 
 * Nix Package Manager
 - Packages [[https://github.com/nixos/nixpkgs][github.com/nixos/nixpkgs]].
+- linux, macOS
 - Invoked with =nix=.
 - nix "derivations".
 - =nix build=
 - =nix search=
+- binary caches: NixOS, macOS
 
 * Nix shell
 - Ad hoc: =nix-shell -p vim -p emacs=
@@ -109,7 +119,7 @@ pip install -r requirements.txt
 #+BEGIN_SRC nix
 with import <nixpkgs> { };
 mkShell {
-  buildInputs = [
+ buildInputs = [
     (python3Packages.withPackages (ps: [ps.ipython ps.tensorflow]))
     (haskellPackages.ghcWithPackages (ps: [ps.tensorflow ps.tensorflow-ops ps.HUnit]))
   ];
@@ -137,11 +147,18 @@ mkShell {
 - Learning curve.
 - Not easily discoverable.
 - Some extra storage space.
-- (Very rarely) a package is hard to build.
+- (Very rarely) hard to build a package.
 
 * Advantages
 - Reproducible.
 - Cross platform.
 - Works (fails) consistently.
-- Actually fun.
+- Fun.
 - Totally worth it!
+
+* More
+- NixOS: [[https://nixos.org][nixos.org]]
+- Dive into nix: [[https://nixos.org/nixos/nix-pills][nixos.org/nixos/nix-pills]]
+- Ops with nix: [[https://nixos.org/nixops][nixos.org/nixops]]
+- Slides: [[https://github.com/sveitser/nix-tour][github.com/sveitser/nix-tour]]
+- My NixOS config: [[https://github.com/sveitser/nixconfig][github.com/sveitser/nixconfig]]

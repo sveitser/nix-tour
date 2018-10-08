@@ -19,6 +19,26 @@ Work in Progress!
 - Can anyone run my code?
 - Can I run my code in a year?
 
+* More Motivation
+- Notes from trying to run a machine learning project.
+** phomemizer
+- Is not on pypi. We can run
+  #+BEGIN_SRC shell
+  sed -i 's|^phonemizer|git+https://github.com/bootphon/phonemizer|' \
+      scripts/requirements.txt`
+  #+END_SRC
+before installing from =requirements.txt=.
+** festival
+- Segfault with 2.4-3 on arch linux.
+- 2.4-2 works.
+- Needs language data: festival-english or festival-us on arch linux.
+** pytorch
+- needs 0.1.12 which is very old
+- =set -x CXX g++-7; set -x CC gcc-7;=
+- =pip install https://github.com/pytorch/pytorch@0.1.12=
+- Despite setting NO_CUDA=1 it tries to compile with CUDA support.
+  Maybe NO_CUDA wasn't implemented in pytorch 0.1.12 yet.
+- It would require and old CUDA version.
 * Installation
 - Native package manager on =NixOS=.
 - Download from: [[https://nixos.org/nix][nixos.org/nix]]

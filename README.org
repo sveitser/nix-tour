@@ -16,7 +16,7 @@ Work in Progress!
 - Is not on pypi. We can run
   #+BEGIN_SRC shell
   sed -i 's|^phonemizer|git+https://github.com/bootphon/phonemizer|' \
-      scripts/requirements.txt`
+      scripts/requirements.txt
   #+END_SRC
 before installing from =requirements.txt=.
 ** festival
@@ -27,16 +27,8 @@ before installing from =requirements.txt=.
 - needs 0.1.12 which is very old
 - =set -x CXX g++-7; set -x CC gcc-7;=
 - =pip install https://github.com/pytorch/pytorch@0.1.12=
-- Despite setting NO_CUDA=1 it tries to compile with CUDA support.
-  Maybe NO_CUDA wasn't implemented in pytorch 0.1.12 yet.
-- It would require and old CUDA version.
-
-* More Motivation
-- 1001 forgotten/obsolete/... dependencies.
-- The latest and greatest.
-- APIs "subject to change yesterday".
-- Can anyone run my code?
-- Can I run my code in a year?
+- Despite setting NO_CUDA=1 seems to compile with CUDA support.
+- Would require older CUDA version.
 
 * Teaser
 #+BEGIN_SRC nix
@@ -47,6 +39,13 @@ python3.withPackages (ps: [
   ps.ipython
 ])
 #+END_SRC
+
+* More Motivation
+- 1001 forgotten/obsolete/... dependencies.
+- The latest and greatest.
+- APIs "subject to change yesterday".
+- Can anyone run my code?
+- Can I run my code in a year?
 
 * Nix Language
 
@@ -85,13 +84,12 @@ map (x: x * 2) [1 2 3]
 - binary caches: NixOS, macOS
 
 * Nix shell
-- Ad hoc: =nix-shell -p vim -p emacs=
+- Ad hoc: =nix-shell -p cowsay=
 #+BEGIN_SRC nix
 with import <nixpkgs> { };
 mkShell {
   buildInputs = [
-    vim
-    emacs
+    cowsay
   ];
 }
 #+END_SRC

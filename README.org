@@ -150,7 +150,7 @@ mkShell {
 - Totally worth it!
 
 * Thanks
-** TODO Thanks
+** Thanks
 - NixOS: [[https://nixos.org][nixos.org]]
 - Dive into nix: [[https://nixos.org/nixos/nix-pills][nixos.org/nixos/nix-pills]]
 - Ops with nix: [[https://nixos.org/nixops][nixos.org/nixops]]

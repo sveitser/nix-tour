@@ -24,7 +24,7 @@
 - Despite setting NO_CUDA=1 seems to compile with CUDA support.
 - Would require older CUDA version.
 
-
+* Teaser
 ** Teaser
 
 #+BEGIN_SRC nix
@@ -51,7 +51,6 @@ python3.withPackages (ps: [
 - Run =nix repl=.
 - Type =:?= for help.
 
-** Examples:
 #+BEGIN_SRC
 plus = a: b: a + b
 plus 2 3

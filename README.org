@@ -18,7 +18,7 @@
 - Can use =git+https://github.com/bootphon/phonemizer=
 *** festival
 - Segfault with 2.4-3 on arch linux but 2.4-2 works.
-- Needs language data: festival-english or festival-us on arch linux.
+- Needs language data, which package to install?
 *** pytorch
 - Needs v0.1.12 which is very old.
 - Despite setting NO_CUDA=1 seems to compile with CUDA support.
@@ -86,6 +86,16 @@ mkShell {
 #+END_SRC
 - Goes into =shell.nix=.
 - Activate with =nix-shell=.
+* direnv
+** direnv
+- Per directory "automagic" environment.
+- See [[https://direnv.net][direnv.net]]
+- Hook into shell =eval "$(direnv hook bash)"=
+#+BEGIN_SRC bash
+echo 'use nix' > .envrc
+direnv allow
+#+END_SRC
+
 * Language Specific Package Managers
 ** Language Specific Package Managers
 #+BEGIN_SRC nix
@@ -97,23 +107,7 @@ mkShell {
   ];
 }
 #+END_SRC
-
-* direnv
-** direnv
-- Per directory "automagic" environment.
-- See [[https://direnv.net][direnv.net]]
-- Hook into shell =eval "$(direnv hook bash)"=
-#+BEGIN_SRC bash
-echo 'use nix' > .envrc
-direnv allow
-#+END_SRC
-- =nix-shell= + =virtualenv= with direnv
-#+BEGIN_SRC bash
-echo layout_python >> .envrc
-direnv allow
-pip install flask
-pip freeze
-#+END_SRC
+- =echo layout_python >> .envrc=
 
 * Wrappers
 ** Wrappers

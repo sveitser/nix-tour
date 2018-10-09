@@ -86,7 +86,19 @@ mkShell {
 #+END_SRC
 - Goes into =shell.nix=.
 - Activate with =nix-shell=.
-* Direnv
+* Language Specific Package Managers
+** Language Specific Package Managers
+#+BEGIN_SRC nix
+with import <nixpkgs> { };
+mkShell {
+  buildInputs = [
+    python3
+    python3Packages.virtualenv
+  ];
+}
+#+END_SRC
+
+* direnv
 ** direnv
 - Per directory "automagic" environment.
 - See [[https://direnv.net][direnv.net]]
@@ -99,8 +111,8 @@ direnv allow
 #+BEGIN_SRC bash
 echo layout_python >> .envrc
 direnv allow
-echo ipython > requirements.txt
-pip install -r requirements.txt
+pip install flask
+pip freeze
 #+END_SRC
 
 * Wrappers

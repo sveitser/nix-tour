@@ -6,4 +6,3 @@
 direnv allow
 make
 #+END_SRC
-```

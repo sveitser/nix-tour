@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -e
+
+function build {
+    echo "building $1"
+    emacs --batch "$1/README.org" -f org-beamer-export-to-pdf
+}
+
+if [ -z $1 ]; then
+    for dir in */; do
+        build "$dir"
+    done
+else
+    build $1
+fi
